@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Musashi v4.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" href="/assets/favicon.ico">
+<link rel="stylesheet" href="frontend/draganddrop/main.css">
+<link rel="stylesheet" href="frontend/navbar/style.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<script src="draganddrop/main.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="app/src/styles.css" /> 
+<script type="module" src="app/src/js/togglePassword.js"></script>
+<script type="module" src="app/src/js/browseFile.js"></script>
+<script type="module" src="app/src/js/clearSelectedFiles.js"></script>
+<script type="module" src="app/src/js/fileEncryptDecrypt.js"></script>
+<script type="module" src="app/src/js/reset.js"></script>
+</head>
+
+<style>
+  html,body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="dropdown">
+    <button class="dropbtn"><img src="frontend/images/white-musashi-logo.png" style="width:130px; padding-left: 15px;" alt="Musashi" class="center">
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href="#">Account</a>
+      <a href="#">Exit</a>
+    </div>
+  </div> 
+  <div class="topnav-right">
+    <a class="active" href="#home" style="display:inline;"><img src="frontend/images/icons/home-icon.svg"  style="width:15px; ">Home</a>
+    <a href="#news" class="myBtn_multi"><img src="frontend/images/icons/encrypt-icon.svg"  style="width:15px; color:white"> Encrypt/Decrypt</a>
+    <a href="#contact" class="myBtn_multi"><img src="frontend/images/icons/steg-icon.svg"  style="width:15px; "> Steganography</a>
+    <a href="#search" class="myBtn_multi"><img src="frontend/images/icons/message-icon.svg"  style="width:20px; "> Message</a>
+    <a href="#finf" class="myBtn_multi"><img src="frontend/images/icons/message-icon.svg"  style="width:20px; "> File in a File</a>
+  </div>
+</div>
+
+
+
+    <section id="home">
+        <div style="padding-left:16px">
+            <h3 style="font-weight: bold; padding-bottom: 20px;">Welcome Back!</h3>
+            <div class="search-container topnav-left" style="padding-right: 10px;">
+                <form action="/action_page.php">
+                  <input type="text" placeholder="Search your files ..." name="search">
+                  <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+<div>
+  <h3 style="font-weight: bold; padding-left:16px; padding-top: 20px;">Your Files</h3><table>
+    <tr>
+      <th>File Name</th>
+      <th>File Type</th>
+      <th>Last Opened</th>
+    </tr>
+    <tr>
+      <td>filename</td>
+      <td>pdf</td>
+      <td>Today</td>
+    </tr>
+    <tr>
+      <td>filename2</td>
+      <td>jpg</td>
+      <td>Yesterday</td>
+    </tr>
+  </table></div>
+
+
+<!-- The Encrypt/Decrypt Modal -->
+<div class="modal modal_multi">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+          <div class="modal-header">
+            <span class="close close_multi">×</span>
+            <h5>Encrypt/Decrypt Modal</h5>
+          </div>
+          <div class="modal-body">
+            <body>
+              <div
+                id="browse-container"
+                class="border-2 border-neutral-800 p-3 flex justify-center gap-4">
+                <label
+                  class="w-full bg-neutral-200 text-black p-[5.5px] rounded-sm hover:bg-neutral-300 hover:cursor-pointer active:scale-[0.99] transition-all duration-[0.05s]">
+                  📄 Files
+                  <input 
+                    id="file-picker"
+                    type="file"
+                    multiple="multiple"
+                    class="hidden" />
+                </label>
+                <label
+                  class="w-full bg-neutral-200 text-black p-[5.5px] rounded-sm hover:bg-neutral-300 hover:cursor-pointer active:scale-[0.99] transition-all duration-[0.05s]">
+                  📁 Folders
+                  <input
+                    id="folder-picker"
+                    type="file"
+                    webkitdirectory mozdirectory msdirectory odirectory directory multiple
+                    class="hidden"/>
+                </label>
+              </div>
+          
+              <div
+                id="password-container"
+                class="border-2 border-neutral-800 p-3 py-[10px] flex justify-around items-center content-center">
+                <input
+                  type="password"
+                  id="password-input"
+                  placeholder="Enter Password"
+                  class="text-black bg-neutral-100 w-full rounded-sm rounded-tr-none rounded-br-none h-8 px-2 focus:outline-none focus:border-yellow-500 focus:border-2"
+                />
+                <label
+                  id="toggle-password"
+                  for="password-input"
+                  class="w-16 bg-neutral-200 rounded-sm rounded-bl-none h-8 rounded-tl-none p-1 px-2 hover:bg-neutral-300 hover:cursor-pointer">
+                  Show
+                </label>
+              </div>
+          
+              <div
+                id="files-container"
+                class="border-2 border-neutral-800 w-auto h-[300px] overflow-auto whitespace-nowrap scrollbar scroll-smooth">
+                <span
+                  id="files-container-title"
+                  class="sticky bg-neutral-300 top-0 left-0 h-[35px] flex justify-center items-center font-semibold text-lg">
+                  Selected Files
+                </span>
+                <ul
+                  id="selected-files">
+                </ul>
+              </div>
+              
+              <button
+                disabled
+                id="clear-btn"
+                class="w-full bg-blue-200 h-8 text-black font-semibold text-lg hover:bg-blue-300 opacity-10">
+                Clear All
+              </button>
+          
+              <div
+                id="encrypt-decrypt-btn-container"
+                class="border-2 border-neutral-800 p-3 flex justify-center gap-4">
+                <button
+                  id="encrypt-btn"
+                  class="w-full bg-[#fff0f0] text-black flex justify-center items-center p-[5.5px] rounded-sm hover:bg-red-200 active:scale-[0.98] transition-all duration-[0.05s]">
+                  <img
+                    src="assets/lock.svg"
+                    alt="locked padlock"
+                    class="pr-px">
+                  Encrypt
+                </button>
+                <button
+                  id="decrypt-btn"
+                  class="w-full bg-[#f1fff0] text-black flex justify-center items-center p-[5.5px] rounded-sm hover:bg-green-200 active:scale-[0.98] transition-all duration-[0.05s]">
+                  <img
+                    src="assets/unlock.svg"
+                    alt="unlocked padlock"
+                    class="pr-px">
+                  Decrypt
+                </button>
+              </div>
+          
+              <p
+                id="message-box"
+                class="mx-2 my-[10px] font-semibold h-[33px] px-4 flex items-center justify-center rounded-full text-black bg-neutral-100 opacity-10">
+              </p>
+          
+              <div class="px-2">
+                <div
+                  id="progress-bar-container"
+                  class="bg-neutral-100 w-full h-3 flex items-center rounded overflow-hidden opacity-10">
+                    <div
+                      id="progress-bar"
+                      class="h-full rounded w-full">
+                    </div>
+                </div>
+              </div>
+          
+              <div class="px-2">
+                <button
+                  disabled
+                  id="reset-btn"
+                  class="bg-blue-200 text-black text-lg h-[34px] font-medium tracking-wide w-full rounded mt-3 hover:bg-blue-300 active:scale-x-[0.99] transition-all duration-[0.05s] opacity-10">
+                  Reset
+                </button>
+              </div>
+        <!--
+            <div class="modal-footer">
+              <h3>Modal Footer</h3>
+            </div> -->
+          </div>
+        
+        </div>
+        
+    </div> 
+
+</div>
+
+<!-- The Steg Modal -->
+<div  class="modal modal_multi">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close close_multi">×</span>
+        <h5>Steganography Modal</h5>
+      </div>
+        <p>Some text in the Modal..2</p>
+    </div>
+
+</div>
+
+<!-- The Message Modal -->
+<div  class="modal modal_multi">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close close_multi">×</span>
+      <h5>Hide Message Modal</h5>
+    </div>
+      <p>Some text in the Modal..3</p>
+  </div>
+
+</div>
+
+
+
+<script>
+// Get the modal
+ var modalparent = document.getElementsByClassName("modal_multi");
+
+// Get the button that opens the modal
+var modal_btn_multi = document.getElementsByClassName("myBtn_multi");
+
+// Get the <span> element that closes the modal
+var span_close_multi = document.getElementsByClassName("close_multi");
+
+// When the user clicks the button, open the modal
+function setDataIndex() {
+  for (i = 0; i < modal_btn_multi.length; i++){
+    modal_btn_multi[i].setAttribute('data-index', i);
+    modalparent[i].setAttribute('data-index', i);
+    span_close_multi[i].setAttribute('data-index', i);
+  }
+}
+  for (i = 0; i < modal_btn_multi.length; i++){
+    modal_btn_multi[i].onclick = function() {
+      var ElementIndex = this.getAttribute('data-index');
+      modalparent[ElementIndex].style.display = "block";
+    };
+    // When the user clicks on <span> (x), close the modal
+    span_close_multi[i].onclick = function() {
+      var ElementIndex = this.getAttribute('data-index');
+      modalparent[ElementIndex].style.display = "none";
+    };
+
+  }
+
+  window.onload = function() {
+  setDataIndex();
+  };
+
+  window.onclick = function(event) {
+    if (event.target === modalparent[event.target.getAttribute('data-index')]) {
+        modalparent[event.target.getAttribute('data-index')].style.display = "none";
+    }
+};
+</script>
+</body>
+</html>
